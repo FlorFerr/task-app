@@ -18,7 +18,7 @@ function App() {
       setTasks(loadedTasks);
 
   }
-  const {sendRequest: fetchTasks, isLoading, error} = useHttp({url: 'https://moviesapp-10288-default-rtdb.firebaseio.com/tasks.json'}, transformTasks)
+  const {sendRequest: fetchTasks, isLoading, error} = useHttp()
 
   /*const fetchTasks = async (taskText) => {
     setIsLoading(true);
@@ -48,8 +48,8 @@ function App() {
   };*/
 
   useEffect(() => {
-    fetchTasks();
-  }, []);
+    fetchTasks({url: 'https://moviesapp-10288-default-rtdb.firebaseio.com/tasks.json'}, transformTasks);
+  }, [fetchTasks]);
 
   const taskAddHandler = (task) => {
     setTasks((prevTasks) => prevTasks.concat(task));
@@ -57,7 +57,7 @@ function App() {
 
   return (
     <React.Fragment>
-      <NewTask onAddTask={taskAddHandler} />
+      <NewTask onAddTask={taskAddHandler}  />
       <Tasks
         items={tasks}
         loading={isLoading}
